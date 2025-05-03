@@ -41,21 +41,24 @@ class CouncilClass(AbstractGetBinDataClass):
             # If you bang in the house number (or property name) and postcode in the box it should find your property
             wait = WebDriverWait(driver, 60)
             address_entry_field = wait.until(
-                EC.element_to_be_clickable((By.XPATH, '//*[@id="combobox-input-22"]'))
+                EC.element_to_be_clickable((By.XPATH, '//*[contains(@id, "combobox-input")]'))
             )
 
             address_entry_field.send_keys(str(full_address))
 
             address_entry_field = wait.until(
-                EC.element_to_be_clickable((By.XPATH, '//*[@id="combobox-input-22"]'))
+                EC.element_to_be_clickable((By.XPATH, '//*[contains(@id, "combobox-input")]'))
             )
             address_entry_field.click()
             address_entry_field.send_keys(Keys.BACKSPACE)
             address_entry_field.send_keys(str(full_address[len(full_address) - 1]))
 
+            # Wait briefly for dropdown to appear
+            time.sleep(3)
+
             first_found_address = wait.until(
                 EC.element_to_be_clickable(
-                    (By.XPATH, '//*[@id="dropdown-element-22"]/ul')
+                    (By.XPATH, '//*[contains(@id, "dropdown-element-")]/ul')
                 )
             )
 
